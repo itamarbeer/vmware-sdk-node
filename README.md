@@ -1,27 +1,27 @@
-# nodevecenter
+# vmware-sdk-node
 
 Production-grade Node.js TypeScript library for managing multiple VMware vCenters.
 
 ## Features
 
-- **Multi-vCenter support** - Each client instance manages its own session independently
-- **Full inventory browsing** - Datacenters, clusters, hosts, VMs, datastores
-- **Snapshot management** - Create, list, remove, consolidate snapshots
-- **VM operations** - Power on/off/reset, reconfigure CPU/memory
-- **Events & alarms** - Query events, list active alarms, error aggregation
-- **Task engine** - All mutating operations return a `TaskHandle` with `wait()` and `status()`
-- **Type-safe** - Full TypeScript types for all domain objects
-- **SOAP-first** - Uses VMware VIM/Web Services SDK directly
-- **Production-ready** - Rate limiting, concurrency control, retry logic, structured errors
+- **Multi-vCenter support** — Each client instance manages its own session independently
+- **Full inventory browsing** — Datacenters, clusters, hosts, VMs, datastores, networks
+- **VM lifecycle** — Power on/off/reset, reconfigure, clone, destroy, snapshots
+- **Events & alarms** — Query events, list active alarms, error aggregation
+- **Task engine** — All mutating operations return a `TaskHandle` with `wait()` and `status()`
+- **Type-safe** — Full TypeScript types and JSDoc on all public APIs
+- **SOAP-first** — Uses VMware VIM/Web Services SDK directly
+- **Production-ready** — Rate limiting, concurrency control, retry logic, structured errors
 
-## Quick Start
+## Installation
 
 ```bash
-npm install nodevecenter
+# Install from GitHub
+npm install github:itamarbeer/vmware-sdk-node
 ```
 
 ```typescript
-import { VsphereClient } from 'nodevecenter';
+import { VsphereClient } from 'vmware-sdk-node';
 
 const client = await VsphereClient.connect({
   host: 'vcenter.example.com',

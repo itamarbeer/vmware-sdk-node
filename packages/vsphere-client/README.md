@@ -1,17 +1,18 @@
-# nodevecenter
+# vmware-sdk-node
 
 A typed Node.js client for the VMware vSphere SOAP API. Provides a clean, module-based interface for managing virtual machines, snapshots, events, alarms, and inventory across one or more vCenter servers.
 
 ## Installation
 
-```
-npm install nodevecenter
+```bash
+# Install from GitHub
+npm install github:itamarbeer/vmware-sdk-node
 ```
 
 ## Quick Start
 
 ```typescript
-import { VsphereClient } from 'nodevecenter';
+import { VsphereClient } from 'vmware-sdk-node';
 
 const client = await VsphereClient.connect({
   host: 'vcenter.example.com',
@@ -88,7 +89,7 @@ const client = await VsphereClient.connect({
 A `noopLogger` is exported for cases where you need an explicit silent logger:
 
 ```typescript
-import { noopLogger } from 'nodevecenter';
+import { noopLogger } from 'vmware-sdk-node';
 ```
 
 ## Modules
@@ -116,7 +117,7 @@ const vms = await client.inventory.listVMs({
 });
 
 // Single VM by MoRef
-import { moRef } from 'nodevecenter';
+import { moRef } from 'vmware-sdk-node';
 const vm = await client.inventory.getVM(moRef('VirtualMachine', 'vm-42'));
 
 // Datastores (optionally scoped to a datacenter)
@@ -302,7 +303,7 @@ If a task fails, `wait()` throws a `VsphereError` with code `TASK_FAILED`. If it
 All errors thrown by the client are instances of `VsphereError`, which extends `Error` with structured metadata.
 
 ```typescript
-import { VsphereError, VsphereErrorCode } from 'nodevecenter';
+import { VsphereError, VsphereErrorCode } from 'vmware-sdk-node';
 
 try {
   await client.vm.powerOn(vmRef);
@@ -338,7 +339,7 @@ try {
 The exported `withRetry` helper provides exponential backoff with jitter:
 
 ```typescript
-import { withRetry, VsphereError } from 'nodevecenter';
+import { withRetry, VsphereError } from 'vmware-sdk-node';
 
 const vms = await withRetry(() => client.inventory.listVMs(), {
   maxRetries: 3,       // default: 3
@@ -409,7 +410,7 @@ All public types and functions are exported from the package root:
 
 ```typescript
 // Client
-export { VsphereClient } from 'nodevecenter';
+export { VsphereClient } from 'vmware-sdk-node';
 
 // Types
 export type {
@@ -419,10 +420,10 @@ export type {
   PowerState, ConnectionState, HostPowerState, TaskState, AlarmStatus,
   VmFilter, EventFilter, AlarmFilter, VmReconfigSpec, CreateSnapshotOptions,
   TaskWaitOptions, RecentErrorsFilter, RetryOptions, VsphereErrorOptions,
-} from 'nodevecenter';
+} from 'vmware-sdk-node';
 
 // Utilities
-export { moRef, SERVICE_INSTANCE, VsphereError, VsphereErrorCode, TaskHandle, noopLogger, withRetry } from 'nodevecenter';
+export { moRef, SERVICE_INSTANCE, VsphereError, VsphereErrorCode, TaskHandle, noopLogger, withRetry } from 'vmware-sdk-node';
 ```
 
 ## License
