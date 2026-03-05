@@ -112,7 +112,7 @@ export class PropertyCollectorHelper {
     const response = await this.callFn<Record<string, unknown>>('RetrievePropertiesEx', {
       _this: this.propertyCollectorRef,
       specSet,
-      options: { maxObjects: 0 },
+      options: {},
     });
 
     const returnval = (response as Record<string, unknown>)?.returnval as Record<string, unknown> | undefined;

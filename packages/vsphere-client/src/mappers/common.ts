@@ -9,13 +9,21 @@ export function toSoapMoRef(ref: MoRef): { attributes: { type: string }; $value:
 export function prepareSoapArgs(args: Record<string, unknown>): Record<string, unknown> {
   const result: Record<string, unknown> = {};
   for (const [key, val] of Object.entries(args)) {
-    if (val && typeof val === 'object' && 'type' in val && 'value' in val && Object.keys(val).length === 2) {
-      result[key] = toSoapMoRef(val as MoRef);
-    } else if (val && typeof val === 'object' && !Array.isArray(val)) {
-      result[key] = prepareSoapArgs(val as Record<string, unknown>);
-    } else {
-      result[key] = val;
-    }
+    result[key] = convertValue(val);
+  }
+  return result;
+}
+
+function convertValue(val: unknown): unknown {
+  if (!val || typeof val !== 'object') return val;
+  if (Array.isArray(val)) return val.map(convertValue);
+  const obj = val as Record<string, unknown>;
+  if ('type' in obj && 'value' in obj && Object.keys(obj).length === 2) {
+    return toSoapMoRef(obj as unknown as MoRef);
+  }
+  const result: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(obj)) {
+    result[k] = convertValue(v);
   }
   return result;
 }
