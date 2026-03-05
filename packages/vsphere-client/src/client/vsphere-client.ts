@@ -87,10 +87,13 @@ export class VsphereClient {
     if (!this.connected) return;
 
     this.session.stopKeepAlive();
-    await this.session.logout();
-    await this.soap.destroy();
-    this.connected = false;
-    this.logger.info('Disconnected');
+    try {
+      await this.session.logout();
+    } finally {
+      await this.soap.destroy();
+      this.connected = false;
+      this.logger.info('Disconnected');
+    }
   }
 
   /** Inventory queries (VMs, hosts, clusters, datacenters, datastores). */

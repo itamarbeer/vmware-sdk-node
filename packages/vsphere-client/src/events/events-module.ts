@@ -81,7 +81,9 @@ export class EventsModule {
       return mapEvents(rawEvents);
     } finally {
       // Clean up the collector to avoid server-side resource leaks
-      await this.callFn('DestroyCollector', { _this: collectorRef }).catch(() => {});
+      await this.callFn('DestroyCollector', { _this: collectorRef }).catch((err) => {
+        this.logger.warn(`Failed to destroy event collector: ${err}`);
+      });
     }
   }
 }
