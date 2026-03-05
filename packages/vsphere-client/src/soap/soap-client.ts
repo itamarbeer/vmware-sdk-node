@@ -122,11 +122,9 @@ export class SoapClient {
       }
 
       try {
-        const prepared = prepareSoapArgs(args);
-        this.logger.debug(`SOAP args for ${method}: ${JSON.stringify(prepared, null, 2)}`);
         const result = await (methodFn as (args: Record<string, unknown>) => Promise<unknown[]>).call(
           this.client,
-          prepared,
+          prepareSoapArgs(args),
         );
 
         // soap library returns [result, rawResponse, soapHeader, rawRequest]

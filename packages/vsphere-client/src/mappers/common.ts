@@ -61,21 +61,33 @@ export function toDate(raw: unknown): Date | undefined {
   return isNaN(d.getTime()) ? undefined : d;
 }
 
+/** Unwrap a soap library value that may be wrapped as { $value: ... } or { _: ... }. */
+function unwrap(raw: unknown): unknown {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return raw;
+  const obj = raw as Record<string, unknown>;
+  if ('$value' in obj) return obj.$value;
+  if ('_' in obj) return obj._;
+  return raw;
+}
+
 export function toString(raw: unknown): string {
   if (raw === null || raw === undefined) return '';
-  return String(raw);
+  const v = unwrap(raw);
+  if (v === null || v === undefined) return '';
+  return String(v);
 }
 
 export function toNumber(raw: unknown, fallback = 0): number {
   if (raw === null || raw === undefined) return fallback;
-  const n = Number(raw);
+  const n = Number(unwrap(raw));
   return isNaN(n) ? fallback : n;
 }
 
 export function toBool(raw: unknown, fallback = false): boolean {
   if (raw === null || raw === undefined) return fallback;
-  if (typeof raw === 'boolean') return raw;
-  return raw === 'true' || raw === '1';
+  const v = unwrap(raw);
+  if (typeof v === 'boolean') return v;
+  return v === 'true' || v === '1';
 }
 
 export function ensureArray<T>(val: T | T[] | undefined | null): T[] {
