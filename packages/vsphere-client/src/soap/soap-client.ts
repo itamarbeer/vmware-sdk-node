@@ -6,6 +6,7 @@ import { noopLogger } from '../utils/logger.js';
 import { TokenBucketRateLimiter } from '../utils/rate-limiter.js';
 import { ConcurrencyLimiter } from '../utils/concurrency.js';
 import { wrapSoapFault } from './fault-handler.js';
+import { prepareSoapArgs } from '../mappers/common.js';
 
 export class SoapClient {
   private client: soap.Client | null = null;
@@ -123,7 +124,7 @@ export class SoapClient {
       try {
         const result = await (methodFn as (args: Record<string, unknown>) => Promise<unknown[]>).call(
           this.client,
-          args,
+          prepareSoapArgs(args),
         );
 
         // soap library returns [result, rawResponse, soapHeader, rawRequest]

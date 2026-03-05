@@ -1,5 +1,25 @@
 import type { MoRef } from '../types/mo-ref.js';
 
+/** Convert a MoRef to the soap library's XML attribute format. */
+export function toSoapMoRef(ref: MoRef): { attributes: { type: string }; $value: string } {
+  return { attributes: { type: ref.type }, $value: ref.value };
+}
+
+/** Recursively convert MoRef objects in SOAP call args to soap library format. */
+export function prepareSoapArgs(args: Record<string, unknown>): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  for (const [key, val] of Object.entries(args)) {
+    if (val && typeof val === 'object' && 'type' in val && 'value' in val && Object.keys(val).length === 2) {
+      result[key] = toSoapMoRef(val as MoRef);
+    } else if (val && typeof val === 'object' && !Array.isArray(val)) {
+      result[key] = prepareSoapArgs(val as Record<string, unknown>);
+    } else {
+      result[key] = val;
+    }
+  }
+  return result;
+}
+
 export function toMoRef(raw: unknown): MoRef {
   if (!raw || typeof raw !== 'object') {
     return { type: 'unknown', value: String(raw) };
