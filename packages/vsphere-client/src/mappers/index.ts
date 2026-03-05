@@ -1,0 +1,12 @@
+export { toMoRef, toDate, toString, toNumber, toBool, ensureArray, propsToMap } from './common.js';
+export type { ObjectContent } from './common.js';
+export { mapVmProperties, VM_PROPERTY_PATHS } from './vm-mapper.js';
+export { mapHostProperties, HOST_PROPERTY_PATHS } from './host-mapper.js';
+export { mapClusterProperties, CLUSTER_PROPERTY_PATHS } from './cluster-mapper.js';
+export { mapDatacenterProperties, DATACENTER_PROPERTY_PATHS } from './datacenter-mapper.js';
+export { mapDatastoreProperties, DATASTORE_PROPERTY_PATHS } from './datastore-mapper.js';
+export { mapNetworkProperties, NETWORK_PROPERTY_PATHS } from './network-mapper.js';
+export { mapSnapshotTree } from './snapshot-mapper.js';
+export { mapEvents } from './event-mapper.js';
+export { mapAlarms } from './alarm-mapper.js';
+export { mapTaskProperties, mapTaskInfo, TASK_PROPERTY_PATHS } from './task-mapper.js';

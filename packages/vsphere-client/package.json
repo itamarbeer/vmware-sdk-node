@@ -1,0 +1,52 @@
+{
+  "name": "vmware-sdk-node",
+  "version": "0.1.0",
+  "description": "Production-grade Node.js TypeScript library for managing multiple VMware vCenters",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:integration": "VC_INTEGRATION=1 vitest run --config vitest.integration.config.ts",
+    "lint": "eslint src/",
+    "format": "prettier --write .",
+    "docs": "typedoc --out docs-generated src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["vmware", "vsphere", "vcenter", "esxi", "virtualization", "soap"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itamarbeer/vmware-sdk-node.git",
+    "directory": "packages/vsphere-client"
+  },
+  "bugs": {
+    "url": "https://github.com/itamarbeer/vmware-sdk-node/issues"
+  },
+  "homepage": "https://github.com/itamarbeer/vmware-sdk-node#readme",
+  "author": "nodevecenter contributors",
+  "license": "MIT",
+  "dependencies": {
+    "soap": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "eslint": "^9.0.0",
+    "@eslint/js": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "prettier": "^3.2.0",
+    "tsup": "^8.0.0",
+    "typedoc": "^0.25.0",
+    "typescript": "^5.4.0",
+    "vitest": "^2.0.0"
+  }
+}
