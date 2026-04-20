@@ -26,14 +26,13 @@
   "keywords": ["vmware", "vsphere", "vcenter", "esxi", "virtualization", "soap"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/itamarbeer/vmware-sdk-node.git",
-    "directory": "packages/vsphere-client"
+    "url": "https://github.com/itamarbeer/vmware-sdk-node.git"
   },
   "bugs": {
     "url": "https://github.com/itamarbeer/vmware-sdk-node/issues"
   },
   "homepage": "https://github.com/itamarbeer/vmware-sdk-node#readme",
-  "author": "nodevecenter contributors",
+  "author": "itamarbeer",
   "license": "MIT",
   "dependencies": {
     "soap": "^1.1.0"
