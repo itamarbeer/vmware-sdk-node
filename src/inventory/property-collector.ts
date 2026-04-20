@@ -55,7 +55,7 @@ export class PropertyCollectorHelper {
     if (results.length === 0) return null;
 
     const map: Record<string, unknown> = {};
-    for (const prop of results[0].propSet ?? []) {
+    for (const prop of results[0].propSet) {
       map[prop.name] = prop.val;
     }
     return map;
@@ -100,9 +100,7 @@ export class PropertyCollectorHelper {
 
       return await this.executeRetrieve(specSet);
     } finally {
-      await this.callFn('DestroyView', { _this: viewRef }).catch((err) => {
-        this.logger.warn(`Failed to destroy container view: ${err}`);
-      });
+      await this.callFn('DestroyView', { _this: viewRef }).catch(() => {});
     }
   }
 

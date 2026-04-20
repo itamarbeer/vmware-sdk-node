@@ -5,16 +5,24 @@ import { toMoRef, toString, toNumber, propsToMap } from './common.js';
 export function mapHostProperties(obj: MoRef, propSet: Array<{ name: string; val: unknown }>): HostSummary {
   const props = propsToMap(propSet);
 
+  const cpuMhz = toNumber(props['summary.hardware.cpuMhz']);
+  const numCpuCores = toNumber(props['summary.hardware.numCpuCores']);
+  const memoryBytes = toNumber(props['summary.hardware.memorySize']);
+  const overallCpuUsage = toNumber(props['summary.quickStats.overallCpuUsage']);
+  const overallMemoryUsageMB = toNumber(props['summary.quickStats.overallMemoryUsage']);
+
   return {
     moRef: obj,
     name: toString(props['name']),
     connectionState: mapConnectionState(props['runtime.connectionState']),
     powerState: mapHostPowerState(props['runtime.powerState']),
     cpuModel: toString(props['summary.hardware.cpuModel']),
-    cpuMhz: toNumber(props['summary.hardware.cpuMhz']),
-    numCpuCores: toNumber(props['summary.hardware.numCpuCores']),
-    memoryBytes: toNumber(props['summary.hardware.memorySize']),
+    cpuMhz,
+    numCpuCores,
+    memoryBytes,
     parentRef: props['parent'] ? toMoRef(props['parent']) : undefined,
+    overallCpuUsage,
+    overallMemoryUsageMB,
   };
 }
 
@@ -40,5 +48,7 @@ export const HOST_PROPERTY_PATHS = [
   'summary.hardware.cpuMhz',
   'summary.hardware.numCpuCores',
   'summary.hardware.memorySize',
+  'summary.quickStats.overallCpuUsage',
+  'summary.quickStats.overallMemoryUsage',
   'parent',
 ];

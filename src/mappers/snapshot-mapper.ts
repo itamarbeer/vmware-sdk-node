@@ -3,6 +3,11 @@ import { toMoRef, toString, toDate, toBool, ensureArray } from './common.js';
 
 export function mapSnapshotTree(raw: unknown): Snapshot[] {
   if (!raw) return [];
+  // SOAP returns { VirtualMachineSnapshotTree: [...] } wrapper
+  const obj = raw as Record<string, unknown>;
+  if (obj.VirtualMachineSnapshotTree) {
+    return ensureArray(obj.VirtualMachineSnapshotTree).map(mapSnapshotNode);
+  }
   const items = ensureArray(raw);
   return items.map(mapSnapshotNode);
 }

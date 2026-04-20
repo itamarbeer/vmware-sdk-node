@@ -11,6 +11,20 @@ export type TaskState = 'queued' | 'running' | 'success' | 'error';
 /** Alarm severity: red (critical), yellow (warning), green (ok), gray (unknown). */
 export type AlarmStatus = 'red' | 'yellow' | 'green' | 'gray';
 
+/** Per-disk storage info parsed from config.hardware.device + layoutEx. */
+export interface VmDiskInfo {
+  /** Device label (e.g. "Hard disk 1"). */
+  label: string;
+  /** Provisioned capacity in bytes. */
+  capacityBytes: number;
+  /** Actual used space in bytes (from layoutEx). */
+  usedBytes: number;
+  /** VMDK backing file path (e.g. "[datastore1] vm/vm.vmdk"). */
+  fileName: string;
+  /** Whether the disk is thin provisioned. */
+  thinProvisioned: boolean;
+}
+
 /** Summary information for a virtual machine. */
 export interface VmSummary {
   /** VM managed object reference. */
@@ -37,6 +51,30 @@ export interface VmSummary {
   template: boolean;
   /** BIOS UUID of the VM. */
   uuid: string;
+  /** CPU usage in MHz from quickStats. */
+  overallCpuUsage: number;
+  /** Guest memory usage in MB from quickStats. */
+  guestMemoryUsageMB: number;
+  /** Committed storage in bytes. */
+  storageCommitted: number;
+  /** Uncommitted storage in bytes. */
+  storageUncommitted: number;
+  /** Whether the VM has snapshots. */
+  hasSnapshot: boolean;
+  /** VM annotation / notes. */
+  annotation?: string;
+  /** VMware Tools status. */
+  toolsStatus?: string;
+  /** VMware Tools version. */
+  toolsVersionStatus?: string;
+  /** Virtual hardware version. */
+  hardwareVersion?: string;
+  /** Uptime in seconds from quickStats. */
+  uptimeSeconds: number;
+  /** Per-disk storage breakdown. */
+  disks: VmDiskInfo[];
+  /** Reference to the parent folder. */
+  parentRef?: MoRef;
 }
 
 /** Summary information for an ESXi host. */
@@ -59,6 +97,10 @@ export interface HostSummary {
   memoryBytes: number;
   /** Parent cluster or folder reference. */
   parentRef?: MoRef;
+  /** Overall CPU usage in MHz from quickStats. */
+  overallCpuUsage: number;
+  /** Overall memory usage in MB from quickStats. */
+  overallMemoryUsageMB: number;
 }
 
 /** Summary information for a compute cluster. */
